@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -32,7 +33,6 @@ function calculator() {
             choices: ['Add', 'Subtract', 'Multiply', 'Divide'],
         },
     ]).then(({ operator }) => __awaiter(this, void 0, void 0, function* () {
-        console.log(operator);
         const num1 = yield inquirer.prompt([{ type: 'input', name: 'num1', message: 'Enter the first number:' }]);
         const num2 = yield inquirer.prompt([{ type: 'input', name: 'num2', message: 'Enter the second number:' }]);
         // check if inputs are numbers

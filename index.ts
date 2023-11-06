@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import inquirer from 'inquirer';
 function add(x: number, y: number): number {
     return x + y;
