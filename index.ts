@@ -29,12 +29,30 @@ function calculator() {
             choices: ['Add', 'Subtract', 'Multiply', 'Divide'],
         },
     ]).then(async ({operator}) => {
-        const num1 = await inquirer.prompt([{type: 'input', name: 'num1', message: 'Enter the first number:'}]);
-        const num2 = await inquirer.prompt([{type: 'input', name: 'num2', message: 'Enter the second number:'}]);
+        const numbers = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'num1',
+                message: 'Enter the first number:',
+                validate(input: any): boolean | string | Promise<boolean | string> {
+                    const parsedValue: number = parseFloat(input);
+                    return !isNaN(parsedValue) && parsedValue > 0;
+                }
+            },
+            {
+                type: 'input',
+                name: 'num2',
+                message: 'Enter the second number:',
+                validate(input: any): boolean | string | Promise<boolean | string> {
+                    const parsedValue: number = parseFloat(input);
+                    return !isNaN(parsedValue) && parsedValue > 0;
+                }
+            }
+        ]);
 
-        // check if inputs are numbers
-        const x = parseFloat(num1.num1);
-        const y = parseFloat(num2.num2);
+        const {num1, num2} = numbers;
+        const x: number = num1;
+        const y: number = num2;
 
         if (isNaN(x) || isNaN(y)) {
             console.log('Please enter valid numbers.');

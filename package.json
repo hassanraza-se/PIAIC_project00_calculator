@@ -1,6 +1,6 @@
 {
   "name": "piaic_project00_calculator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "command line calculator using inquirer",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,9 @@
     "@types/inquirer": "^9.0.6"
   },
   "type": "module",
-  "bin":  "./index.js",
+  "bin": {
+    "piaic_project00_calculator": "index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/hassanraza-se/PIAIC_project00_calculator"

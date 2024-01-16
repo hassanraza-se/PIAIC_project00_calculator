@@ -1,13 +1,4 @@
 #!/usr/bin/env node
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import inquirer from 'inquirer';
 function add(x, y) {
     return x + y;
@@ -32,12 +23,30 @@ function calculator() {
             message: 'Select an operation:',
             choices: ['Add', 'Subtract', 'Multiply', 'Divide'],
         },
-    ]).then(({ operator }) => __awaiter(this, void 0, void 0, function* () {
-        const num1 = yield inquirer.prompt([{ type: 'input', name: 'num1', message: 'Enter the first number:' }]);
-        const num2 = yield inquirer.prompt([{ type: 'input', name: 'num2', message: 'Enter the second number:' }]);
-        // check if inputs are numbers
-        const x = parseFloat(num1.num1);
-        const y = parseFloat(num2.num2);
+    ]).then(async ({ operator }) => {
+        const numbers = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'num1',
+                message: 'Enter the first number:',
+                validate(input) {
+                    const parsedValue = parseFloat(input);
+                    return !isNaN(parsedValue) && parsedValue > 0;
+                }
+            },
+            {
+                type: 'input',
+                name: 'num2',
+                message: 'Enter the second number:',
+                validate(input) {
+                    const parsedValue = parseFloat(input);
+                    return !isNaN(parsedValue) && parsedValue > 0;
+                }
+            }
+        ]);
+        const { num1, num2 } = numbers;
+        const x = num1;
+        const y = num2;
         if (isNaN(x) || isNaN(y)) {
             console.log('Please enter valid numbers.');
             return;
@@ -63,7 +72,7 @@ function calculator() {
         else {
             console.log(`Result: ${result}`);
         }
-    })).catch(error => {
+    }).catch(error => {
         if (error.isTtyError) {
             // Prompt couldn't be rendered in the current environment
         }
