@@ -35,24 +35,30 @@ function calculator() {
                 name: 'num1',
                 message: 'Enter the first number:',
                 validate(input: any): boolean | string | Promise<boolean | string> {
-                    const parsedValue: number = parseFloat(input);
-                    return !isNaN(parsedValue) && parsedValue > 0;
-                }
+                    const parsedValue = parseFloat(input);
+                    if (Number.isNaN(parsedValue)) {
+                        return 'Please enter a valid number.';
+                    }
+                    return true;
+                },
             },
             {
                 type: 'input',
                 name: 'num2',
                 message: 'Enter the second number:',
                 validate(input: any): boolean | string | Promise<boolean | string> {
-                    const parsedValue: number = parseFloat(input);
-                    return !isNaN(parsedValue) && parsedValue > 0;
-                }
+                    const parsedValue = parseFloat(input);
+                    if (Number.isNaN(parsedValue)) {
+                        return 'Please enter a valid number.';
+                    }
+                    return true;
+                },
             }
         ]);
 
         const {num1, num2} = numbers;
-        const x: number = num1;
-        const y: number = num2;
+        const x: number = parseFloat(num1);
+        const y: number = parseFloat(num2);
 
         if (isNaN(x) || isNaN(y)) {
             console.log('Please enter valid numbers.');
@@ -80,7 +86,22 @@ function calculator() {
         } else {
             console.log(`Result: ${result}`);
         }
+
+        inquirer.prompt([
+            {
+                type: "confirm",
+                name: "retry",
+                message: "Want to try again?"
+            }
+        ]).then(({retry}) => {
+            if (retry) { calculator(); }
+            else {
+                console.log('Thank you for using the calculator. \nCreated by: Hassan Raza (https://hassanraza.net)')
+            }
+        })
+
     }).catch(error => {
+        console.error(error);
         if (error.isTtyError) {
             // Prompt couldn't be rendered in the current environment
         } else {

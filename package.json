@@ -1,6 +1,6 @@
 {
   "name": "piaic_project00_calculator",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "command line calculator using inquirer",
   "main": "index.js",
   "scripts": {

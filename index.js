@@ -31,8 +31,11 @@ function calculator() {
                 message: 'Enter the first number:',
                 validate(input) {
                     const parsedValue = parseFloat(input);
-                    return !isNaN(parsedValue) && parsedValue > 0;
-                }
+                    if (Number.isNaN(parsedValue)) {
+                        return 'Please enter a valid number.';
+                    }
+                    return true;
+                },
             },
             {
                 type: 'input',
@@ -40,13 +43,16 @@ function calculator() {
                 message: 'Enter the second number:',
                 validate(input) {
                     const parsedValue = parseFloat(input);
-                    return !isNaN(parsedValue) && parsedValue > 0;
-                }
+                    if (Number.isNaN(parsedValue)) {
+                        return 'Please enter a valid number.';
+                    }
+                    return true;
+                },
             }
         ]);
         const { num1, num2 } = numbers;
-        const x = num1;
-        const y = num2;
+        const x = parseFloat(num1);
+        const y = parseFloat(num2);
         if (isNaN(x) || isNaN(y)) {
             console.log('Please enter valid numbers.');
             return;
@@ -72,7 +78,22 @@ function calculator() {
         else {
             console.log(`Result: ${result}`);
         }
+        inquirer.prompt([
+            {
+                type: "confirm",
+                name: "retry",
+                message: "Want to try again?"
+            }
+        ]).then(({ retry }) => {
+            if (retry) {
+                calculator();
+            }
+            else {
+                console.log('Thank you for using the calculator. \nCreated by: Hassan Raza (https://hassanraza.net)');
+            }
+        });
     }).catch(error => {
+        console.error(error);
         if (error.isTtyError) {
             // Prompt couldn't be rendered in the current environment
         }
